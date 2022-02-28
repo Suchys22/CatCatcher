@@ -1,6 +1,10 @@
 extends KinematicBody
 
-var speed = 7
+var speed
+
+var move_speed = 7
+var crouch_speed = 4
+
 const ACCEL_DEFAULT = 7
 const ACCEL_AIR = 1
 onready var accel = ACCEL_DEFAULT
@@ -11,13 +15,24 @@ var cam_accel = 40
 var mouse_sense = 0.1
 var snap
 
+var stand_height = 1.5
+var crouch_height = .5
+
+var stamina = 100
+
+onready var wait = $stamT
+
 var direction = Vector3()
 var velocity = Vector3()
 var gravity_vec = Vector3()
 var movement = Vector3()
+var fall = Vector3()
 
 onready var head = $Head
 onready var camera = $Head/Camera
+onready var capsule = $CollisionShape
+onready var bonker = $HeadBonker
+onready var cicinka = $Cicinka/CollisionShape
 
 func _ready():
 	#curzor pápá
@@ -42,13 +57,14 @@ func _process(delta):
 		camera.global_transform = head.global_transform
 		
 func _physics_process(delta):
+	var head_bonked = false
 	#klaveska
 	direction = Vector3.ZERO
 	var h_rot = global_transform.basis.get_euler().y
 	var f_input = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
 	var h_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	direction = Vector3(h_input, 0, f_input).rotated(Vector3.UP, h_rot).normalized()
-	
+		
 	#skok a hop
 	if is_on_floor():
 		snap = -get_floor_normal()
@@ -58,16 +74,52 @@ func _physics_process(delta):
 		snap = Vector3.DOWN
 		accel = ACCEL_AIR
 		gravity_vec += Vector3.DOWN * gravity * delta
-		
+			
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		snap = Vector3.ZERO
 		gravity_vec = Vector3.UP * jump
+	
+	speed = move_speed
+	
+	# Run
+	if Input.is_action_pressed("run") && stamina > .1:
+		speed = 14
+		stamina-= .5
+		
+	else: 
+		Input.is_action_just_released("run")
+		speed = 7
+		
+	if speed == 7:
+		wait
+		stamina+=.1
+	
+	# Čupění
+	if bonker.is_colliding():
+		head_bonked = true
+			
+	if head_bonked:
+		fall.y-=2	
+			
+	if Input.is_action_pressed("crouch"):
+		capsule.shape.height -= crouch_speed * delta
+		speed = crouch_speed
+	elif !head_bonked:
+		capsule.shape.height += crouch_speed * delta
+		
+	capsule.shape.height = clamp(capsule.shape.height, crouch_height, stand_height)
+	
+	# Catch
+	if Input.is_action_just_pressed("lmb"):
+		print("Klikl jsi")
+		
 	
 	#move it more
 	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 	movement = velocity + gravity_vec
 	
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
+
 	
 	
 	
