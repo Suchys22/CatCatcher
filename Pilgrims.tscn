@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Player/FPS.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=2]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=3]
 [ext_resource path="res://haffffffff/data.hterrain" type="Resource" id=4]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Pilgrims_slot1_albedo_bump.packed_tex" type="Texture" id=6]
 [ext_resource path="res://Pilgrims_slot1_normal_roughness.packed_tex" type="Texture" id=7]
 [ext_resource path="res://Pilgrims_slot0_normal_roughness.packed_tex" type="Texture" id=8]
+[ext_resource path="res://Cats/1.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Day_night"
@@ -78,6 +79,7 @@ tracks/2/keys = {
 background_mode = 1
 background_sky = SubResource( 1 )
 ambient_light_energy = 0.1
+fog_enabled = true
 fog_color = Color( 0.776471, 0.843137, 0.913725, 1 )
 fog_depth_begin = 70.0
 fog_depth_end = 600.0
@@ -183,7 +185,7 @@ textures = [ [ ExtResource( 5 ), ExtResource( 6 ) ], [ ExtResource( 8 ), ExtReso
 [node name="Spatial" type="Spatial"]
 
 [node name="CSGBox" type="CSGBox" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.9378, 0, 29.056 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 46.6328, 0.0883951, 28.8365 )
 use_in_baked_light = true
 use_collision = true
 width = 42.7432
@@ -216,9 +218,6 @@ use_in_baked_light = true
 width = 32.2829
 height = 168.787
 depth = 18.0886
-
-[node name="FPS" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1023.85, 4.49737, 1024.03 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.82487, 5.43602, 5.79178 )
@@ -255,3 +254,9 @@ shader_params/u_ground_uv_scale = 3.0
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Plane( 1, 1, 1, 0 )
+
+[node name="Cicinka" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1028.93, 0.174915, 1025.05 )
+
+[node name="FPS" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1028.05, 1.29117, 1030.13 )
