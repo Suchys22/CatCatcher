@@ -2,7 +2,7 @@
 	"contains_albedo": true,
 	"resolution": 512,
 	"src": {
-		"a": "res://Textures/pavementNormal.png",
+		"a": "#ff888888",
 		"rgb": "res://Textures/pavment3.png"
 	}
 }

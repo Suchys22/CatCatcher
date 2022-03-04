@@ -3,6 +3,6 @@
 	"resolution": 512,
 	"src": {
 		"a": "#ffffffff",
-		"rgb": "#ff8888ff"
+		"rgb": "res://Textures/pavementNormal.png"
 	}
 }

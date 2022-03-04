@@ -3,35 +3,22 @@ extends KinematicBody
 var hp = 100
 var speed = 7
 
-var attacked = false
-
-onready var nav = "../NavigationMeshInstance"
-
-var path = []
-var path_node = 0
-
 onready var player = get_node("/root/World/Scripts/Player")
+onready var attack_anim = get_node("AnimationPlayer")
+onready var hitbox = get_node("Hitbox")
 
 func _process(delta):
 	if hp <= 0:
 		queue_free()
+	
+#	if hp > 0:
+#		for body in hitbox.get_overlapping_bodies():
+#			if body.is_in_group("Hrac"):
 #
+#				if not attack_anim.is_playing():
+#					attack_anim.play("Attack")
+#					attack_anim.queue("Return")
 #
-#func _physics_process(delta):
-#	if hp <= 0:
-#		queue_free()
-#	else:
-#		if path_node < path.size():
-#			var direction = (path[path_node] - global_transform.origin)
-#			if direction.lenght() < 1:
-#				path_node += 1
-#			else:
-#				move_and_slide(direction.normalized() * speed, Vector3.UP)
-#
-#func move_to(pos):
-#	path = nav.get_simple_path(global_transform.origin, pos)
-#	path_node = 0
-#
-#
-#func _on_Timer_timeout():
-#	move_to(player.global_transform.origin)
+#				if attack_anim.current_animation == "Attack":
+#					body.hp -= 1
+
