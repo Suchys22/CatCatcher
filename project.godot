@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="CatCatchers"
-run/main_scene="res://Pilgrims.tscn"
+run/main_scene="res://Assets/Levels/Pilgrims.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -92,6 +92,21 @@ move_left={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+lmb={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+run={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+crouch={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [physics]
 
@@ -105,4 +120,4 @@ quality/filters/use_nearest_mipmap_filter=true
 quality/subsurface_scattering/quality=2
 quality/voxel_cone_tracing/high_quality=true
 quality/filters/use_fxaa=true
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://Assets/Levels/TerrainData/default_env.tres"

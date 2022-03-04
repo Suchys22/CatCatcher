@@ -1,0 +1,15 @@
+[remap]
+
+importer="hterrain_packed_texture_importer"
+type="StreamTexture"
+valid=false
+
+[deps]
+
+source_file="res://Textures/Pilgrims_slot1_albedo_bump.packed_tex"
+[params]
+
+compress/mode=2
+flags/repeat=1
+flags/filter=true
+flags/mipmaps=true
