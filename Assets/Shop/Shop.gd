@@ -9,7 +9,7 @@ func _on_Area_area_entered(area):
 	var backpack = player.get("backpack_pocet")
 	if backpack > 0:
 		sell(backpack)
-		player.set("backpack_pocet", 0)
+	#	player.set("backpack_pocet", 0)
 
 func buy(item, price):
 	penize-= price

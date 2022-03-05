@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Textures/Models/cat.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://Assets/Cats/Kocka.gd" type="Script" id=2]
@@ -10,85 +10,36 @@ extents = Vector3( 1.22567, 1.11928, 1 )
 [sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="BoxShape" id=3]
-extents = Vector3( 1, 1.63324, 0.978137 )
-
-[sub_resource type="Animation" id=5]
-resource_name = "Attack"
-length = 0.25
-step = 0.25
-tracks/0/type = "value"
-tracks/0/path = NodePath("CollisionShape:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.01, 0.25 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 30, 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=6]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("CollisionShape:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 30, 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "Return"
-length = 0.5
-step = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("CollisionShape:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector3( 30, 0, 0 ), Vector3( 0, 0, 0 ) ]
-}
-
 [node name="Kocka" type="KinematicBody" groups=["Kocky"]]
-transform = Transform( 0.54, 0, 0, 0, 0.467654, 0.27, 0, -0.27, 0.467654, 0, 0, 0 )
+transform = Transform( 0.293, 0, 0, 0, 0.295, 0, 0, 0, 0.3, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1.20144, 0, 0, 0, 1.44646, -0.750359, 0, 0.835114, 1.29966, 0, 1.4462, 0 )
+transform = Transform( -1.20144, 0, -2.26602e-07, 0, 1.67023, 0, 1.81412e-07, 0, -1.50072, 0, 1.35119, -0.72428 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="CollisionShape"]
-transform = Transform( 0.832332, 0, 0, 0, 0.598719, 0, 0, 0, 0.666347, 0, -0.749862, 0.481834 )
+transform = Transform( 0.832332, 0, -2.84217e-14, 0, 0.598719, 0, -2.4869e-14, 0, 0.666347, 5.27023e-08, -0.982442, -0.000788897 )
 mesh = ExtResource( 1 )
 material/0 = SubResource( 4 )
 
-[node name="Hitbox" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.245163, -0.18512, -4.04338 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
-transform = Transform( 1.2689, 0, 0, 0, 1.48831, 0, 0, 0, 0.70427, -0.298445, 0.922544, 6.98275 )
-shape = SubResource( 3 )
-
-[node name="Attack" type="AnimationPlayer" parent="."]
-anims/Attack = SubResource( 5 )
-anims/RESET = SubResource( 6 )
-anims/Return = SubResource( 7 )
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+[node name="Move" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.15
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="See" type="Area" parent="."]
+transform = Transform( -0.0552812, 0, 1.19906, 0, 1, 0, -1.39891, 0, -0.0473839, -0.507795, 0.656724, -2.27028 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="See"]
+transform = Transform( 1, 7.45058e-09, -3.25675e-16, 0, -4.37114e-08, -1, -7.45058e-09, 1, -4.37114e-08, -1.82611, 0, 0.64 )
+polygon = PoolVector2Array( 0, 0, 15, 25, 15, -25 )
+margin = 1.721
+
+[node name="Spawn" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Move" to="." method="_on_Move_timeout"]
+[connection signal="body_entered" from="See" to="." method="_on_See_body_entered"]
+[connection signal="timeout" from="Spawn" to="." method="_on_Spawn_timeout"]

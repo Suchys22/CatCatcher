@@ -24,7 +24,9 @@ var hp = 100
 var stamina = 100
 
 var backpack_pocet = 0
-var backpack_max = 5
+var backpack_max = 6
+
+var menu = false
 
 onready var sell = get_node("/root/World/Scripts/Sell")
 
@@ -51,7 +53,7 @@ func _ready():
 
 func _input(event):
 	#myška
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && !menu:
 		rotate_y(deg2rad(-event.relative.x * mouse_sense))
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sense))
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89))
@@ -116,12 +118,21 @@ func _physics_process(delta):
 		speed = 14
 		stamina-= .5
 	else: 
-		Input.is_action_just_released("run")
 		speed = 7
 		
 	if speed == 7:
 		wait
 		stamina+=.1
+		
+	if Input.is_action_just_pressed("escape") && !menu:
+		menu = true
+	elif Input.is_action_just_pressed("escape") && menu:
+		menu = false
+		
+	if menu:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	# Čupění
 	if bonker.is_colliding():
@@ -140,8 +151,9 @@ func _physics_process(delta):
 	
 	
 	#move it more
-	velocity = velocity.linear_interpolate(direction * speed, accel * delta)
-	movement = velocity + gravity_vec
+	if !menu:
+		velocity = velocity.linear_interpolate(direction * speed, accel * delta)
+		movement = velocity + gravity_vec
 	
 
 	
