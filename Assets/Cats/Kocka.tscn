@@ -23,11 +23,6 @@ transform = Transform( 0.832332, 0, -2.84217e-14, 0, 0.598719, 0, -2.4869e-14, 0
 mesh = ExtResource( 1 )
 material/0 = SubResource( 4 )
 
-[node name="Move" type="Timer" parent="."]
-process_mode = 0
-wait_time = 0.15
-autostart = true
-
 [node name="See" type="Area" parent="."]
 transform = Transform( -0.0552812, 0, 1.19906, 0, 1, 0, -1.39891, 0, -0.0473839, -0.507795, 0.656724, -2.27028 )
 
@@ -36,10 +31,6 @@ transform = Transform( 1, 7.45058e-09, -3.25675e-16, 0, -4.37114e-08, -1, -7.450
 polygon = PoolVector2Array( 0, 0, 15, 25, 15, -25 )
 margin = 1.721
 
-[node name="Spawn" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
+[node name="Timer" type="Timer" parent="."]
 
-[connection signal="timeout" from="Move" to="." method="_on_Move_timeout"]
 [connection signal="body_entered" from="See" to="." method="_on_See_body_entered"]
-[connection signal="timeout" from="Spawn" to="." method="_on_Spawn_timeout"]

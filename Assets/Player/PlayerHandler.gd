@@ -1,5 +1,9 @@
 extends KinematicBody
 
+signal hp_changed(hp)
+signal stamina_changed(stamina)
+signal backpack_changed(pocet, maximum)
+
 var speed
 
 var move_speed = 7
@@ -24,11 +28,13 @@ var hp = 100
 var stamina = 100
 
 var backpack_pocet = 0
-var backpack_max = 6
+var backpack_max = 2
 
 var menu = false
 
 onready var sell = get_node("/root/World/Scripts/Sell")
+
+var head_bonked = false
 
 onready var wait = $stamT
 
@@ -50,6 +56,8 @@ onready var hitbox = $Head/Camera/Hitbox
 func _ready():
 	#curzor pápá
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	emit_signal("hp_changed", hp)
+	emit_signal("backpack_changed", backpack_pocet,backpack_max)
 
 func _input(event):
 	#myška
@@ -57,21 +65,34 @@ func _input(event):
 		rotate_y(deg2rad(-event.relative.x * mouse_sense))
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sense))
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89))
+	if event.is_action_pressed("escape"):
+		menu = not menu
+		pause(menu)
+	if event.is_action_pressed("lmb"):
+		attack()
 		
+		
+func pause(state: bool):
+	match state:
+		true:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		false:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 func attack():
-	if Input.is_action_just_pressed("lmb"):
-		if not melee_anim.is_playing():
-			melee_anim.play("Attack")
-			melee_anim.queue("Return")
+	if not melee_anim.is_playing():
+		melee_anim.play("Attack")
+		melee_anim.queue("Return")
 			
-		if melee_anim.current_animation == "Attack":
-			for body in hitbox.get_overlapping_bodies():
-				if body.is_in_group("Kocky"):
-					body.hp -= damage
-					if body.hp == 0:
-						backpack_pocet+=1
-						
-						
+	if melee_anim.current_animation == "Attack":
+		for body in hitbox.get_overlapping_bodies():
+			if body.is_in_group("Kocky"):
+				body.hp -= damage
+				if body.hp == 0 && backpack_pocet < backpack_max:
+					backpack_pocet+=1
+					emit_signal("backpack_changed", backpack_pocet,backpack_max)
+				else:
+					print("Jsi plnej.")
 
 func _process(delta):
 	#camera physics interpolation to reduce physics jitter on high refresh-rate monitors
@@ -85,16 +106,12 @@ func _process(delta):
 		camera.global_transform = head.global_transform
 	
 func _physics_process(delta):
-	var head_bonked = false
 	#klaveska
 	direction = Vector3.ZERO
 	var h_rot = global_transform.basis.get_euler().y
 	var f_input = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
 	var h_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	direction = Vector3(h_input, 0, f_input).rotated(Vector3.UP, h_rot).normalized()
-		
-	# Attack
-	attack()
 		
 	#skok a hop
 	if is_on_floor():
@@ -109,7 +126,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		snap = Vector3.ZERO
 		gravity_vec = Vector3.UP * jump
-		
+	
 	move_and_slide_with_snap(movement, snap, Vector3.UP)
 	speed = move_speed
 	
@@ -117,29 +134,21 @@ func _physics_process(delta):
 	if Input.is_action_pressed("run") && stamina > .1:
 		speed = 14
 		stamina-= .5
+		emit_signal("stamina_changed", stamina)
 	else: 
 		speed = 7
 		
 	if speed == 7:
 		wait
 		stamina+=.1
-		
-	if Input.is_action_just_pressed("escape") && !menu:
-		menu = true
-	elif Input.is_action_just_pressed("escape") && menu:
-		menu = false
-		
-	if menu:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+		emit_signal("stamina_changed", stamina)
+
 	# Čupění
 	if bonker.is_colliding():
 		head_bonked = true
 			
 	if head_bonked:
-		fall.y-=2	
+		fall.y-=2
 			
 	if Input.is_action_pressed("crouch"):
 		capsule.shape.height -= crouch_speed * delta
@@ -154,8 +163,3 @@ func _physics_process(delta):
 	if !menu:
 		velocity = velocity.linear_interpolate(direction * speed, accel * delta)
 		movement = velocity + gravity_vec
-	
-
-	
-	
-	

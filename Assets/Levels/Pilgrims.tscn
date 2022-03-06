@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Levels/Pilgrims_slot1_albedo_bump.packed_tex" type="Texture" id=4]
 [ext_resource path="res://Assets/Cats/Kocka.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Levels/Pilgrims_slot0_normal_roughness.packed_tex" type="Texture" id=6]
+[ext_resource path="res://Assets/Cats/Spawn.gd" type="Script" id=7]
 [ext_resource path="res://Assets/Levels/Pilgrims_slot1_normal_roughness.packed_tex" type="Texture" id=8]
 [ext_resource path="res://Assets/Player/Player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Shop/Sell.tscn" type="PackedScene" id=10]
@@ -191,22 +192,31 @@ textures = [ [ ExtResource( 3 ), ExtResource( 4 ) ], [ ExtResource( 6 ), ExtReso
 
 [node name="World" type="Spatial"]
 
-[node name="Kocka" parent="." instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1033.46, 0, 1046.89 )
+[node name="Hud" parent="." instance=ExtResource( 13 )]
 
-[node name="Kocka2" parent="." instance=ExtResource( 5 )]
+[node name="Label" parent="Hud/Backpack/Sell" index="0"]
+text = "$0"
+
+[node name="Progress" parent="Hud/Backpack" index="1"]
+value = 0.0
+
+[node name="Kocky" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="Kocka" parent="Kocky" instance=ExtResource( 5 )]
+transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1033.46, 0, 1049.92 )
+
+[node name="Kocka2" parent="Kocky" instance=ExtResource( 5 )]
 transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1031.49, 0, 1046.89 )
 
-[node name="Kocka3" parent="." instance=ExtResource( 5 )]
+[node name="Kocka3" parent="Kocky" instance=ExtResource( 5 )]
 transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1029.36, 0, 1046.89 )
 
-[node name="Kocka4" parent="." instance=ExtResource( 5 )]
+[node name="Kocka4" parent="Kocky" instance=ExtResource( 5 )]
 transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1025.56, 0.0643935, 1047.08 )
 
-[node name="Kocka5" parent="." instance=ExtResource( 5 )]
+[node name="Kocka5" parent="Kocky" instance=ExtResource( 5 )]
 transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1027.58, 0, 1046.89 )
-
-[node name="Hud" parent="." instance=ExtResource( 13 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.82487, 5.43602, 5.79178 )
@@ -228,6 +238,17 @@ autoplay = "SkyColor"
 anims/RESET = SubResource( 6 )
 anims/SkyColor = SubResource( 7 )
 
+[node name="Scripts" type="Spatial" parent="."]
+
+[node name="Sell" parent="Scripts" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1034.71, 0, 1042.87 )
+
+[node name="Player" parent="Scripts" instance=ExtResource( 9 )]
+transform = Transform( -0.993447, 0, -0.114296, 0, 1, 0, 0.114296, 0, -0.993447, 1036.34, 0.835112, 1045.94 )
+
+[node name="Melee" parent="Scripts/Player/Head/Camera" index="1"]
+transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0.7, -0.9, -0.9 )
+
 [node name="HTerrain" type="Spatial" parent="."]
 script = ExtResource( 1 )
 _terrain_data = ExtResource( 11 )
@@ -244,10 +265,11 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Plane( 1, 1, 1, 0 )
 
-[node name="Scripts" type="Spatial" parent="."]
+[connection signal="selled" from="Scripts/Sell" to="Hud/Backpack" method="_on_Sell_selled"]
+[connection signal="backpack_changed" from="Scripts/Player" to="Hud/Backpack" method="_on_Player_backpack_changed"]
+[connection signal="hp_changed" from="Scripts/Player" to="Hud/HP/Progress" method="_on_Player_hp_changed"]
+[connection signal="stamina_changed" from="Scripts/Player" to="Hud/Stamina/Progress" method="_on_Player_stamina_changed"]
 
-[node name="Sell" parent="Scripts" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1034.71, 0, 1042.87 )
-
-[node name="Player" parent="Scripts" instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1036.34, 0.835112, 1045.94 )
+[editable path="Hud"]
+[editable path="Scripts/Sell"]
+[editable path="Scripts/Player"]
