@@ -6,10 +6,19 @@ signal backpack_changed(pocet, maximum)
 
 var speed
 
-var move_speed = 7
-var crouch_speed = 4
+export var hp: float
+export var stamina: float
+export var move_speed: float
+export var crouch_speed: float
 
-var damage = 50
+export var mouse_sense = 0.1
+
+export var damage: float
+
+export var backpack = {
+	"pocet": 0,
+	"max": 2,
+}
 
 const ACCEL_DEFAULT = 7
 const ACCEL_AIR = 1
@@ -18,21 +27,12 @@ var gravity = 9.8
 var jump = 5
 
 var cam_accel = 40
-var mouse_sense = 0.1
 var snap
 
 var stand_height = 1.5
 var crouch_height = .5
 
-var hp = 100
-var stamina = 100
-
-var backpack_pocet = 0
-var backpack_max = 2
-
 var menu = false
-
-onready var sell = get_node("/root/World/Scripts/Sell")
 
 var head_bonked = false
 
@@ -57,7 +57,7 @@ func _ready():
 	#curzor pápá
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	emit_signal("hp_changed", hp)
-	emit_signal("backpack_changed", backpack_pocet,backpack_max)
+	emit_signal("backpack_changed", backpack.pocet, backpack.max)
 
 func _input(event):
 	#myška
@@ -88,11 +88,12 @@ func attack():
 		for body in hitbox.get_overlapping_bodies():
 			if body.is_in_group("Kocky"):
 				body.hp -= damage
-				if body.hp == 0 && backpack_pocet < backpack_max:
-					backpack_pocet+=1
-					emit_signal("backpack_changed", backpack_pocet,backpack_max)
+				if body.hp == 0 && backpack.pocet < backpack.max:
+					backpack.pocet+=1
+					emit_signal("backpack_changed", backpack.pocet,backpack.max)
 				else:
-					print("Jsi plnej.")
+					pass
+				#	print("Jsi plnej.")
 
 func _process(delta):
 	#camera physics interpolation to reduce physics jitter on high refresh-rate monitors
@@ -138,8 +139,7 @@ func _physics_process(delta):
 	else: 
 		speed = 7
 		
-	if speed == 7:
-		wait
+	if speed == 7 && stamina < 101:
 		stamina+=.1
 		emit_signal("stamina_changed", stamina)
 

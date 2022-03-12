@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
@@ -6,11 +6,11 @@
 [ext_resource path="res://Assets/Levels/Pilgrims_slot1_albedo_bump.packed_tex" type="Texture" id=4]
 [ext_resource path="res://Assets/Cats/Kocka.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Levels/Pilgrims_slot0_normal_roughness.packed_tex" type="Texture" id=6]
-[ext_resource path="res://Assets/Cats/Spawn.gd" type="Script" id=7]
 [ext_resource path="res://Assets/Levels/Pilgrims_slot1_normal_roughness.packed_tex" type="Texture" id=8]
 [ext_resource path="res://Assets/Player/Player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Shop/Sell.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Assets/Levels/TerrainData/data.hterrain" type="Resource" id=11]
+[ext_resource path="res://Assets/Cats/Spawner.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/UIs/Hud/HUD.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=4]
@@ -190,6 +190,20 @@ script = ExtResource( 2 )
 mode = 0
 textures = [ [ ExtResource( 3 ), ExtResource( 4 ) ], [ ExtResource( 6 ), ExtResource( 8 ) ] ]
 
+[sub_resource type="NavigationMesh" id=9]
+vertices = PoolVector3Array( -14.4, 0.55, 9.53674e-07, -6.3, 0.55, 9.53674e-07, -6, 0.55, -0.9, -14.4, 0.55, -7.2, -14.4, 0.55, -7.2, -6, 0.55, -0.9, -4.5, 0.55, -0.299999, -4.5, 0.55, -14.4, -14.4, 0.55, -14.4, 14.4, 0.55, -7.2, 14.4, 0.55, -14.4, 4.8, 0.55, -14.4, 4.8, 0.55, -14.4, -4.5, 0.55, -14.4, -4.5, 0.55, -0.299999, 4.8, 0.55, -14.4, -4.5, 0.55, -0.299999, -4.5, 0.55, 9.53674e-07, 14.4, 0.55, 9.53674e-07, 14.4, 0.55, -7.2, -6, 0.55, 0.900001, -6.3, 0.55, 9.53674e-07, -14.4, 0.55, 9.53674e-07, -14.4, 0.55, 7.2, -4.2, 0.55, 14.4, -4.5, 0.55, 0.3, -4.8, 0.55, 0.900001, -4.8, 0.55, 0.900001, -6, 0.55, 0.900001, -14.4, 0.55, 7.2, -14.4, 0.55, 14.4, -4.2, 0.55, 14.4, 5.1, 0.55, 14.4, 14.4, 0.55, 14.4, 14.4, 0.55, 7.2, -4.5, 0.55, 9.53674e-07, -4.5, 0.55, 0.3, -4.2, 0.55, 14.4, 5.1, 0.55, 14.4, 14.4, 0.55, 7.2, 14.4, 0.55, 9.53674e-07 )
+polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 5, 4, 6 ), PoolIntArray( 6, 4, 8 ), PoolIntArray( 6, 8, 7 ), PoolIntArray( 11, 10, 9 ), PoolIntArray( 14, 13, 12 ), PoolIntArray( 16, 15, 17 ), PoolIntArray( 17, 15, 19 ), PoolIntArray( 17, 19, 18 ), PoolIntArray( 21, 20, 22 ), PoolIntArray( 22, 20, 23 ), PoolIntArray( 26, 25, 24 ), PoolIntArray( 28, 27, 29 ), PoolIntArray( 29, 27, 30 ), PoolIntArray( 30, 27, 31 ), PoolIntArray( 34, 33, 32 ), PoolIntArray( 36, 35, 37 ), PoolIntArray( 37, 35, 38 ), PoolIntArray( 38, 35, 39 ), PoolIntArray( 39, 35, 40 ) ]
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.298039, 0.294118, 0.294118, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 10 )
+size = Vector3( 30, 0.5, 30 )
+
+[sub_resource type="ConcavePolygonShape" id=12]
+data = PoolVector3Array( -15, 0.25, 15, 15, 0.25, 15, -15, -0.25, 15, 15, 0.25, 15, 15, -0.25, 15, -15, -0.25, 15, 15, 0.25, -15, -15, 0.25, -15, 15, -0.25, -15, -15, 0.25, -15, -15, -0.25, -15, 15, -0.25, -15, 15, 0.25, 15, 15, 0.25, -15, 15, -0.25, 15, 15, 0.25, -15, 15, -0.25, -15, 15, -0.25, 15, -15, 0.25, -15, -15, 0.25, 15, -15, -0.25, -15, -15, 0.25, 15, -15, -0.25, 15, -15, -0.25, -15, 15, 0.25, 15, -15, 0.25, 15, 15, 0.25, -15, -15, 0.25, 15, -15, 0.25, -15, 15, 0.25, -15, -15, -0.25, 15, 15, -0.25, 15, -15, -0.25, -15, 15, -0.25, 15, 15, -0.25, -15, -15, -0.25, -15 )
+
 [node name="World" type="Spatial"]
 
 [node name="Hud" parent="." instance=ExtResource( 13 )]
@@ -199,24 +213,6 @@ text = "$0"
 
 [node name="Progress" parent="Hud/Backpack" index="1"]
 value = 0.0
-
-[node name="Kocky" type="Node" parent="."]
-script = ExtResource( 7 )
-
-[node name="Kocka" parent="Kocky" instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1033.46, 0, 1049.92 )
-
-[node name="Kocka2" parent="Kocky" instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1031.49, 0, 1046.89 )
-
-[node name="Kocka3" parent="Kocky" instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1029.36, 0, 1046.89 )
-
-[node name="Kocka4" parent="Kocky" instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1025.56, 0.0643935, 1047.08 )
-
-[node name="Kocka5" parent="Kocky" instance=ExtResource( 5 )]
-transform = Transform( 0.292715, 0, 0, 0, 0.294798, 0, 0, 0, 0.303764, 1027.58, 0, 1046.89 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.82487, 5.43602, 5.79178 )
@@ -238,17 +234,6 @@ autoplay = "SkyColor"
 anims/RESET = SubResource( 6 )
 anims/SkyColor = SubResource( 7 )
 
-[node name="Scripts" type="Spatial" parent="."]
-
-[node name="Sell" parent="Scripts" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1034.71, 0, 1042.87 )
-
-[node name="Player" parent="Scripts" instance=ExtResource( 9 )]
-transform = Transform( -0.993447, 0, -0.114296, 0, 1, 0, 0.114296, 0, -0.993447, 1036.34, 0.835112, 1045.94 )
-
-[node name="Melee" parent="Scripts/Player/Head/Camera" index="1"]
-transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0.7, -0.9, -0.9 )
-
 [node name="HTerrain" type="Spatial" parent="."]
 script = ExtResource( 1 )
 _terrain_data = ExtResource( 11 )
@@ -265,11 +250,54 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Plane( 1, 1, 1, 0 )
 
-[connection signal="selled" from="Scripts/Sell" to="Hud/Backpack" method="_on_Sell_selled"]
-[connection signal="backpack_changed" from="Scripts/Player" to="Hud/Backpack" method="_on_Player_backpack_changed"]
-[connection signal="hp_changed" from="Scripts/Player" to="Hud/HP/Progress" method="_on_Player_hp_changed"]
-[connection signal="stamina_changed" from="Scripts/Player" to="Hud/Stamina/Progress" method="_on_Player_stamina_changed"]
+[node name="Navigation" type="Navigation" parent="."]
+transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 5, 1055.14, 0, 1049.92 )
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+navmesh = SubResource( 9 )
+
+[node name="Kocka" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 5 )]
+transform = Transform( 0.0586, 0, 0, 0, 0.295, 0, 0, 0, 0.06, -1.50224, 0.25, -1.81323 )
+speed = 0.2
+
+[node name="Spawner" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 12 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -3.03467, 0.80331, -1.15193 )
+pocet_spawn = 2
+max_spawn = 15
+sek_na_spawn = 1
+model = ExtResource( 5 )
+navMesh_node = NodePath("..")
+
+[node name="Player" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 9 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -5.526, 2.85218, 0.0480042 )
+hp = 100.0
+stamina = 100.0
+move_speed = 7.0
+crouch_speed = 4.0
+damage = 50.0
+
+[node name="Sell" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 10 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -0.665985, 0.356608, -1.41 )
+player_node = NodePath("../Player")
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/MeshInstance/StaticBody"]
+shape = SubResource( 12 )
+
+[connection signal="killed" from="Navigation/NavigationMeshInstance/Kocka" to="Navigation/NavigationMeshInstance/Spawner" method="_on_Kocka_killed"]
+[connection signal="backpack_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/Backpack" method="_on_Player_backpack_changed"]
+[connection signal="hp_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/HP/Progress" method="_on_Player_hp_changed"]
+[connection signal="stamina_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/Stamina/Progress" method="_on_Player_stamina_changed"]
+[connection signal="selled" from="Navigation/NavigationMeshInstance/Sell" to="Hud/Backpack" method="_on_Sell_selled"]
 
 [editable path="Hud"]
-[editable path="Scripts/Sell"]
-[editable path="Scripts/Player"]
+[editable path="Navigation/NavigationMeshInstance/Kocka"]
+[editable path="Navigation/NavigationMeshInstance/Spawner"]
+[editable path="Navigation/NavigationMeshInstance/Player"]
+[editable path="Navigation/NavigationMeshInstance/Sell"]

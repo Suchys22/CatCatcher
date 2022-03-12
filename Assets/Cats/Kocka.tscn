@@ -32,5 +32,7 @@ polygon = PoolVector2Array( 0, 0, 15, 25, 15, -25 )
 margin = 1.721
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
-[connection signal="body_entered" from="See" to="." method="_on_See_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
