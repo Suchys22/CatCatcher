@@ -1,0 +1,342 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Levels/Pilgrims_slot0_albedo_bump.packed_tex" type="Texture" id=3]
+[ext_resource path="res://Assets/Levels/Pilgrims_slot1_albedo_bump.packed_tex" type="Texture" id=4]
+[ext_resource path="res://Assets/Cats/Kocka.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Levels/Pilgrims_slot0_normal_roughness.packed_tex" type="Texture" id=6]
+[ext_resource path="res://Assets/Save/SaveSystem.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Levels/Pilgrims_slot1_normal_roughness.packed_tex" type="Texture" id=8]
+[ext_resource path="res://Assets/Player/Player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Shop/Sell.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Levels/TerrainData/data.hterrain" type="Resource" id=11]
+[ext_resource path="res://Assets/Cats/Spawner.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Assets/UIs/Hud/HUD.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Assets/Cats/Torri.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Assets/Shop/Shop.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Assets/UIs/Shop/ShopUI.tscn" type="PackedScene" id=16]
+
+[sub_resource type="Animation" id=4]
+resource_name = "Day_night"
+length = 720.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 720 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -90, 0, 0 ), Vector3( 270, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 140.4, 146.1, 200, 520, 570.6, 581.8, 720 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.6, 0.6, 0.2, 0.0, 0.0, 0.2, 0.6, 0.6 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "transform"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 3.82487, 5.43602, 5.79178, -0.707107, 0, 0, 0.707107, 1, 1, 1 )
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -90, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:light_energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
+background_sky = SubResource( 1 )
+background_color = Color( 0.486275, 0.647059, 0.654902, 1 )
+ambient_light_color = Color( 0.486275, 0.647059, 0.654902, 1 )
+ambient_light_energy = 0.1
+fog_enabled = true
+fog_color = Color( 0.776471, 0.843137, 0.913725, 1 )
+fog_depth_begin = 70.0
+fog_depth_end = 600.0
+fog_height_enabled = true
+fog_height_min = 70.0
+fog_height_max = 80.0
+tonemap_mode = 3
+ssao_enabled = true
+ssao_bias = 0.1
+ssao_light_affect = 1.0
+dof_blur_far_enabled = true
+dof_blur_far_distance = 450.0
+dof_blur_far_transition = 90.0
+dof_blur_far_amount = 0.05
+glow_enabled = true
+glow_bloom = 0.07
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+glow_high_quality = true
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:environment:ambient_light_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.486275, 0.647059, 0.654902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:environment:background_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.486275, 0.647059, 0.654902, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:environment:fog_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.776471, 0.843137, 0.913725, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "SkyColor"
+length = 720.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:environment:background_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 140, 180, 199.7, 360, 530, 540.5, 580, 720 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.486275, 0.647059, 0.654902, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ), Color( 1, 0.701961, 0.188235, 1 ), Color( 0.0117647, 0, 0.0470588, 1 ), Color( 0.0352941, 0.0117647, 0.0509804, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0.909804, 0.180392, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:environment:ambient_light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 140, 180, 200, 530, 540, 580, 720 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ), Color( 0.996078, 0.698039, 0.188235, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0.819608, 0.113725, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ), Color( 0.486275, 0.647059, 0.654902, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:environment:fog_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 140, 180, 200, 520, 540, 580, 720 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.776471, 0.843137, 0.913725, 1 ), Color( 0.776471, 0.843137, 0.913725, 1 ), Color( 1, 0.8, 0.458824, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 0.964706, 0.419608, 1 ), Color( 0.776471, 0.843137, 0.913725, 1 ), Color( 0.776471, 0.843137, 0.913725, 1 ) ]
+}
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 2 )
+mode = 0
+textures = [ [ ExtResource( 3 ), ExtResource( 4 ) ], [ ExtResource( 6 ), ExtResource( 8 ) ] ]
+
+[sub_resource type="NavigationMesh" id=9]
+vertices = PoolVector3Array( -2.7, 0.55, -3, -1.8, 0.55, -3.3, -1.8, 0.55, -14.4, -8.1, 0.55, -14.4, -14.4, 0.55, -2.4, -2.7, 0.55, -2.4, -2.7, 0.55, -3, -8.1, 0.55, -14.4, -14.4, 0.55, -14.4, -1.2, 0.55, -1.5, -1.2, 0.55, -1.2, -0.299998, 0.55, -1.2, -0.899999, 0.55, -3, -1.8, 0.55, -14.4, -0.299998, 0.55, -1.2, 1.90735e-06, 0.55, 1.90735e-06, 14.4, 0.55, 1.90735e-06, 14.4, 0.55, -7.2, 6.3, 0.55, -14.4, 14.4, 0.55, -7.2, 14.4, 0.55, -14.4, 6.3, 0.55, -14.4, -1.8, 0.55, -14.4, -1.8, 0.55, -3.3, -0.899999, 0.55, -3, -1.8, 0.55, -14.4, -0.899999, 0.55, -3, -0.299998, 0.55, -1.2, -1.2, 0.55, -1.2, -1.2, 0.55, -1.5, -2.4, 0.55, -1.5, -1.8, 0.55, 0.600001, -1.8, 0.55, 0.600001, -14.4, 0.55, -2.4, -14.4, 0.55, 6, -7.8, 0.55, 14.4, -0.899999, 0.55, 14.4, -0.899999, 0.55, 0.900002, -1.8, 0.55, 0.600001, -2.4, 0.55, -1.5, -2.7, 0.55, -2.4, -14.4, 0.55, -2.4, -14.4, 0.55, 6, -14.4, 0.55, 14.4, -7.8, 0.55, 14.4, 6.6, 0.55, 14.4, 14.4, 0.55, 14.4, 14.4, 0.55, 7.2, -0.299998, 0.55, 0.900002, -0.899999, 0.55, 0.900002, -0.899999, 0.55, 14.4, 1.90735e-06, 0.55, 1.90735e-06, -0.299998, 0.55, 0.900002, -0.899999, 0.55, 14.4, 6.6, 0.55, 14.4, 14.4, 0.55, 7.2, 14.4, 0.55, 1.90735e-06 )
+polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 5, 4, 6 ), PoolIntArray( 6, 4, 7 ), PoolIntArray( 7, 4, 8 ), PoolIntArray( 10, 9, 11 ), PoolIntArray( 11, 9, 12 ), PoolIntArray( 14, 13, 15 ), PoolIntArray( 15, 13, 18 ), PoolIntArray( 15, 18, 17 ), PoolIntArray( 15, 17, 16 ), PoolIntArray( 21, 20, 19 ), PoolIntArray( 24, 23, 22 ), PoolIntArray( 27, 26, 25 ), PoolIntArray( 29, 28, 30 ), PoolIntArray( 30, 28, 31 ), PoolIntArray( 32, 37, 33 ), PoolIntArray( 33, 37, 34 ), PoolIntArray( 34, 37, 35 ), PoolIntArray( 35, 37, 36 ), PoolIntArray( 39, 38, 40 ), PoolIntArray( 40, 38, 41 ), PoolIntArray( 42, 44, 43 ), PoolIntArray( 45, 47, 46 ), PoolIntArray( 50, 49, 48 ), PoolIntArray( 52, 51, 53 ), PoolIntArray( 53, 51, 54 ), PoolIntArray( 54, 51, 55 ), PoolIntArray( 55, 51, 56 ) ]
+agent/height = 3.0
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.298039, 0.294118, 0.294118, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 10 )
+size = Vector3( 30, 0.5, 30 )
+
+[sub_resource type="ConcavePolygonShape" id=12]
+data = PoolVector3Array( -15, 0.25, 15, 15, 0.25, 15, -15, -0.25, 15, 15, 0.25, 15, 15, -0.25, 15, -15, -0.25, 15, 15, 0.25, -15, -15, 0.25, -15, 15, -0.25, -15, -15, 0.25, -15, -15, -0.25, -15, 15, -0.25, -15, 15, 0.25, 15, 15, 0.25, -15, 15, -0.25, 15, 15, 0.25, -15, 15, -0.25, -15, 15, -0.25, 15, -15, 0.25, -15, -15, 0.25, 15, -15, -0.25, -15, -15, 0.25, 15, -15, -0.25, 15, -15, -0.25, -15, 15, 0.25, 15, -15, 0.25, 15, 15, 0.25, -15, -15, 0.25, 15, -15, 0.25, -15, 15, 0.25, -15, -15, -0.25, 15, 15, -0.25, 15, -15, -0.25, -15, 15, -0.25, 15, 15, -0.25, -15, -15, -0.25, -15 )
+
+[node name="World" type="Spatial"]
+script = ExtResource( 7 )
+
+[node name="Hud" parent="." instance=ExtResource( 13 )]
+
+[node name="Label" parent="Hud/Backpack/Sell" index="0"]
+text = "$0"
+
+[node name="Progress" parent="Hud/Backpack" index="1"]
+value = 0.0
+
+[node name="Shop" parent="." instance=ExtResource( 16 )]
+visible = false
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 3.82487, 5.43602, 5.79178 )
+light_size = 0.817
+light_cull_mask = 4294967279
+shadow_enabled = true
+directional_shadow_blend_splits = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DirectionalLight"]
+autoplay = "Day_night"
+anims/Day_night = SubResource( 4 )
+anims/RESET = SubResource( 5 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="WorldEnvironment"]
+autoplay = "SkyColor"
+anims/RESET = SubResource( 6 )
+anims/SkyColor = SubResource( 7 )
+
+[node name="HTerrain" type="Spatial" parent="."]
+script = ExtResource( 1 )
+_terrain_data = ExtResource( 11 )
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 8 )
+shader_params/u_ground_uv_scale = 3.0
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Plane( 1, 1, 1, 0 )
+
+[node name="Navigation" type="Navigation" parent="."]
+transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 5, 1055.14, 0, 1049.92 )
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+navmesh = SubResource( 9 )
+
+[node name="Shop" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 15 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -211.028, 0, -209.984 )
+Products = {
+"125HP": 10,
+"150HP": 15,
+"200HP": 20,
+"DoubleJump": 40,
+"Sit1": 10,
+"Sit2": 15,
+"Sit3": 20,
+"x2": 40,
+"x4": 60,
+"x6": 80
+}
+penezenka = 200.0
+cena = 10
+nasobic = 1
+player_node = NodePath("../Player")
+zakladni_sit = NodePath("../Player/Head/Camera/Zakladní")
+advanced_sit = NodePath("../Player/Head/Camera/Advanced")
+
+[node name="Spawner" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 12 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -3.03467, 0.80331, -1.15193 )
+pocet_spawn = 2
+max_spawn = 18
+sek_na_spawn = 1
+model_normal = ExtResource( 5 )
+model_attack = ExtResource( 14 )
+navMesh_node = NodePath("..")
+
+[node name="Player" parent="Navigation/NavigationMeshInstance" groups=["Saved"] instance=ExtResource( 9 )]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -0.960052, 2.85218, 0.0480042 )
+move_speed = 7.0
+crouch_speed = 4.0
+damage = 50.0
+shop_node = NodePath("../Shop")
+
+[node name="HPRegen" parent="Navigation/NavigationMeshInstance/Player" index="4"]
+autostart = true
+
+[node name="Sell" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 10 )]
+transform = Transform( 0.838292, 0, 0, 0, 2.06649, 0, 0, 0, 0.952527, -0.665985, 0.241656, -1.41 )
+
+[node name="Area" parent="Navigation/NavigationMeshInstance/Sell" index="1"]
+transform = Transform( 0.45, 0, 0, 0, 0.5, 0, 0, 0, 0.45, 0, 0.502129, 0.0010376 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Navigation/NavigationMeshInstance/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/MeshInstance/StaticBody"]
+shape = SubResource( 12 )
+
+[connection signal="send_data" from="." to="Navigation/NavigationMeshInstance/Player" method="_on_World_send_data"]
+[connection signal="buy_request" from="Shop" to="Navigation/NavigationMeshInstance/Shop" method="_on_Shop_buy_request"]
+[connection signal="ui_changed" from="Shop" to="Navigation/NavigationMeshInstance/Player" method="_on_Shop_ui_changed"]
+[connection signal="hp_changed" from="Navigation/NavigationMeshInstance/Shop" to="Navigation/NavigationMeshInstance/Player" method="_on_Shop_hp_changed"]
+[connection signal="selled" from="Navigation/NavigationMeshInstance/Shop" to="Hud/Backpack" method="_on_Shop_selled"]
+[connection signal="shop_changed" from="Navigation/NavigationMeshInstance/Shop" to="Navigation/NavigationMeshInstance/Player" method="_on_Shop_shop_changed"]
+[connection signal="ui_changed" from="Navigation/NavigationMeshInstance/Shop" to="Shop" method="_on_Shop_ui_changed"]
+[connection signal="backpack_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/Backpack" method="_on_Player_backpack_changed"]
+[connection signal="hp_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/HP/Progress" method="_on_Player_hp_changed"]
+[connection signal="save_game" from="Navigation/NavigationMeshInstance/Player" to="." method="_on_Player_save_game"]
+[connection signal="shop_data_changed" from="Navigation/NavigationMeshInstance/Player" to="Navigation/NavigationMeshInstance/Shop" method="_on_Player_shop_data_changed"]
+[connection signal="stamina_changed" from="Navigation/NavigationMeshInstance/Player" to="Hud/Stamina/Progress" method="_on_Player_stamina_changed"]
+[connection signal="body_entered" from="Navigation/NavigationMeshInstance/Sell" to="Navigation/NavigationMeshInstance/Shop" method="_on_Sell_body_entered"]
+
+[editable path="Hud"]
+[editable path="Shop"]
+[editable path="Navigation/NavigationMeshInstance/Shop"]
+[editable path="Navigation/NavigationMeshInstance/Spawner"]
+[editable path="Navigation/NavigationMeshInstance/Player"]
+[editable path="Navigation/NavigationMeshInstance/Sell"]

@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Textures/Models/cat.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Assets/Cats/Torri.gd" type="Script" id=2]
+[ext_resource path="res://Textures/cat.png" type="Texture" id=3]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 1.22567, 0.920026, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="BoxShape" id=8]
+
+[sub_resource type="Animation" id=5]
+resource_name = "Attack"
+length = 0.25
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 30, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Return"
+length = 0.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 30, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[node name="Torinka" type="KinematicBody" groups=["Kocky"]]
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1.20144, 0, 0, 0, 1.67023, 0, 0, 0, 1.50072, 0, 1.45446, 0.0693059 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="CollisionShape"]
+transform = Transform( 0.832332, 0, 0, 0, 0.598719, 3.55271e-14, 0, -5.68434e-14, 0.666347, 0, -1.04596, 0.0276455 )
+mesh = ExtResource( 1 )
+material/0 = SubResource( 4 )
+
+[node name="Hitbox" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
+shape = SubResource( 8 )
+
+[node name="See" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5966, 0 )
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="See"]
+transform = Transform( 0.647176, 0.762341, 3.3323e-08, 0, -4.37114e-08, 1, 0.762341, -0.647176, -2.82889e-08, 0.0233827, 0, -0.312548 )
+polygon = PoolVector2Array( 0, 0, 10, 2, 0, -10 )
+
+[node name="Attack" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+anims/Return = SubResource( 7 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="body_entered" from="See" to="." method="_on_See_body_entered"]
+[connection signal="body_exited" from="See" to="." method="_on_See_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
