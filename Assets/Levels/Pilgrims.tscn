@@ -266,7 +266,7 @@ transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 5, 1055.14, 0, 1049.92 )
 navmesh = SubResource( 9 )
 
 [node name="Shop" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 15 )]
-transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -211.028, 0, -209.984 )
+transform = Transform( 0.581088, 0, 0, 0, 0.0309663, 0, 0, 0, 0.732171, -0.675827, 0.220894, 2.64998 )
 Products = {
 "125HP": 10,
 "150HP": 15,
@@ -301,6 +301,9 @@ move_speed = 7.0
 crouch_speed = 4.0
 damage = 50.0
 shop_node = NodePath("../Shop")
+
+[node name="Zakladní" parent="Navigation/NavigationMeshInstance/Player/Head/Camera" index="1"]
+transform = Transform( 1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0.9, -0.7, -1.15 )
 
 [node name="HPRegen" parent="Navigation/NavigationMeshInstance/Player" index="4"]
 autostart = true

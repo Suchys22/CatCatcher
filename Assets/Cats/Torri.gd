@@ -81,7 +81,8 @@ func _on_See_body_entered(body: Node) -> void:
 		print("Utooook")
 
 
-#func _on_See_body_exited(body: Node) -> void:
+func _on_See_body_exited(body: Node) -> void:
+	pass
 #	if body.is_in_group("Hrac"):
 #		attack = false
 #		player.set("attacked", false)

@@ -106,7 +106,6 @@ func _notification(what):
 		emit_signal("save_game", data)
 
 func _on_World_send_data(data) -> void:
-#	hp = {"hp": 100, "maximum": 200}#	
 	hp = data.hp
 	stamina = data.stamina
 	backpack.pocet = data.backpack.pocet
@@ -188,7 +187,7 @@ func _physics_process(delta):
 		speed = move_speed
 	
 	# Run
-	if Input.is_action_pressed("run") && stamina.stamina > .1 && velocity > Vector3(0.7, 0.7, 0.7):
+	if Input.is_action_pressed("run") && stamina.stamina > .1 && velocity > Vector3(0.25, 0.25, 0.25):
 		speed = 14
 		stamina.stamina-= .5
 		emit_signal("stamina_changed", stamina)
